@@ -4,22 +4,19 @@ export const typeDefs = gql`
   type Query {
     hello: String
     allMedia: [Media!]!
-  }
-
-  type Mutation {
-    insertPosition(roleName: String!, customerName: String!, remoteWorkAllowed: Boolean): Position!
-  }
-
-  type Position {
-    _id: ID!
-    role_name: String!
-    customer_name: String!
-    remote_work_allowed: Boolean
+    allUsers: [User!]!
   }
 
   type Media {
-    _id: ID
-    type: String
-    title: String
-}
+    _id: ID!
+    type: String!
+    title: String!
+  }
+
+  type User {
+    _id: ID!
+    username: String!
+    password: String!
+  }
+
 `
