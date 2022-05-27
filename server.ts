@@ -1,21 +1,23 @@
-import { Server } from 'https://deno.land/std@0.107.0/http/server.ts'
-import { GraphQLHTTP } from 'https://deno.land/x/gql@1.1.1/mod.ts'
-import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
-import { resolvers } from "./resolvers.ts"
-import { typeDefs } from "./typedefs.ts"
+import { Application, Router } from "https://deno.land/x/oak@v10.0.0/mod.ts";
+import { applyGraphQL, GQLError } from "https://deno.land/x/oak_graphql@0.6.3/mod.ts";
+import { typeDefs } from "./typedefs.ts";
+import { resolvers } from "./resolvers.ts";
 
-const s = new Server({
-  handler: async (req) => {
-    const { pathname } = new URL(req.url)
+const app = new Application();
 
-    return pathname === '/graphql'
-      ? await GraphQLHTTP<Request>({
-          schema: makeExecutableSchema({ resolvers, typeDefs }),
-          graphiql: true
-        })(req)
-      : new Response('Not Found', { status: 404 })
-  },
-  addr: ':3000'
+// const router = new Router();
+
+const GraphQLService = await applyGraphQL<Router>({
+  Router,
+  typeDefs: typeDefs,
+  resolvers: resolvers,
+  // do we need this?
+  context: (ctx) => {
+      // this line is for passing a user context for the auth
+    return { user: "Aaron" };
+  }
 })
 
-s.listenAndServe()
+app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
+
+await app.listen({ port: 3000 });
