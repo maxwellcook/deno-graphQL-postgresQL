@@ -11,6 +11,7 @@ reviewController.pullAllReviews = async() => {
       { _id: el[0], user_id: el[1], media_id: el[2], review: el[3], rating: el[4] }
     );
   });
+  // console.log(resultArr);
   return resultArr;
 }
 

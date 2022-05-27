@@ -17,4 +17,32 @@ mediaController.pullAllMedia = async() => {
   return resultArr;
 }
 
+mediaController.createMedia = async() => {
+  await database.connect();
+  const sqlString = `INSERT INTO "public"."Media" (type, title) VALUES ($1, $2);`;
+  const newMediaInputs = ['movie', 'Snakes on a Plane 10'];
+  const tables = await database.queryArray(
+    sqlString,
+    newMediaInputs
+  );
+  tables
+}
+
 export default mediaController;
+
+// Example using the simplified argument interface
+// {
+//   const result = await client.queryArray(
+//     "SELECT ID, NAME FROM PEOPLE WHERE AGE > $1 AND AGE < $2",
+//     [10, 20],
+//   );
+//   console.log(result.rows);
+// }
+
+// {
+//   const result = await client.queryArray({
+//     args: [10, 20],
+//     text: "SELECT ID, NAME FROM PEOPLE WHERE AGE > $1 AND AGE < $2",
+//   });
+//   console.log(result.rows);
+// }

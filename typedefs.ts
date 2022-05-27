@@ -5,6 +5,7 @@ export const typeDefs = gql`
     hello: String
     allMedia: [Media!]!
     allUsers: [User!]!
+    allReviews: [Review!]!
   }
 
   type Media {
@@ -24,6 +25,6 @@ export const typeDefs = gql`
     user_id: ID!
     media_id: ID!
     review: String!
-    rating: Number!
+    rating: Int
   }
 `
