@@ -1,7 +1,7 @@
 import { Application, Router } from "https://deno.land/x/oak@v10.0.0/mod.ts";
 import { applyGraphQL, GQLError } from "https://deno.land/x/oak_graphql@0.6.3/mod.ts";
 import { typeDefs } from "./typedefs.ts";
-import { resolvers } from "./resolvers.ts";
+import { resolvers } from "./resolvers/resolvers.ts";
 
 const app = new Application();
 
